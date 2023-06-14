@@ -24,7 +24,6 @@ route.post('/up', upload.single('file'), (req, res, next) => {
           console.log('arquivo enviado para porta 3001')
           console.log(req.file)
           
-
           getParsedBody('https://brandmark.io/logo-rank/', req.file.filename)
           .then(result => {
             list.push(...result)
