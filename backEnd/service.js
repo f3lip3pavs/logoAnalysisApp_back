@@ -12,4 +12,8 @@ app.use(express.json())
 
 app.use('/post', route)
 
+app.use('/', (req, res) => {
+    res.send('Hello')
+})
+
 app.listen(port, ()=>{console.log('running on port:', port)})
