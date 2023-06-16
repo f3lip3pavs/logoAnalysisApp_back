@@ -2,9 +2,9 @@ const route = require('express').Router()
 const multer = require('multer')
 const {getParsedBody} = require('./scrap')
 const file = require('fs')
-const { send } = require('process')
-const { resolve } = require('path')
-const { rejects } = require('assert')
+// const { send } = require('process')
+// const { resolve } = require('path')
+// const { rejects } = require('assert')
 
 const dir = 'files'
 
