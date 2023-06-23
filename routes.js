@@ -2,9 +2,7 @@ const route = require('express').Router()
 const multer = require('multer')
 const {getParsedBody} = require('./scrap')
 const file = require('fs')
-// const { send } = require('process')
-// const { resolve } = require('path')
-// const { rejects } = require('assert')
+
 
 const dir = 'files'
 
@@ -88,13 +86,10 @@ verifyDirectory(dir).then(()=>{
   })
 })
 
-//criar uma função post(){
-  // inserir route.post
+function post(){
 
-  // ou
-
-  // upload = multer({ storage: storage })
-// }
+  
+}
   
 
 
