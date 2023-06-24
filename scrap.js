@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer")
+const PCR = require("puppeteer-chromium-resolver");
 
 function delay(time) {
 
@@ -52,8 +53,15 @@ async function getData(time, actualPage){
 
 async function getParsedBody(url, img){
 
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox'] 
+    const options = {};
+    const stats = await PCR(options);
+
+    const browser = await stats.puppeteer.launch({
+        headless: 'new',
+        args: ["--no-sandbox"],
+        executablePath: stats.executablePath
+    }).catch(function(error) {
+        console.log(error);
     });
     
     const page = await browser.newPage()
