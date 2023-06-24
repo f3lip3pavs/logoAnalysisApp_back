@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch service.js",
-    "start": "node service.js"
+    "start": "node service.js && mkdir ./.cache && mv ./node_modules/puppeteer ./.cache"
   },
   "keywords": [],
   "author": "",
