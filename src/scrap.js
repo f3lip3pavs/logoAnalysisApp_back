@@ -1,4 +1,44 @@
 const puppeteer = require("puppeteer")
+const PCR = require("puppeteer-chromium-resolver");
+
+// const puppeteerCore = require('puppeteer-core');
+// const path = require('path');
+// const os = require('os');
+
+// async function downloadChromium() {
+//   const cacheDirectory =
+//     process.env['PUPPETEER_CACHE_DIR'] ||
+//     process.env['npm_config_puppeteer_cache_dir'] ||
+//     process.env['npm_package_config_puppeteer_cache_dir'] ||
+//     path.join(os.homedir(), '.cache', 'puppeteer');
+
+//   const executablePath = path.join(
+//     cacheDirectory,
+//     'chrome',
+//     'win64-114.0.5735.133',
+//     'chrome-win64',
+//     'chrome.exe'
+//   );
+
+//   const browserFetcher = puppeteerCore.createBrowserFetcher({
+//     path: cacheDirectory,
+//   });
+
+//   console.log('Baixando Chromium...');
+//   await browserFetcher.download('114.0.5735.133');
+
+//   console.log('Configurando executável...');
+//   await puppeteerCore.launch({
+//     executablePath,
+//     args: ['--no-sandbox', '--disable-setuid-sandbox'],
+//   });
+
+//   console.log('Chromium e dependências baixados com sucesso!');
+// }
+
+// downloadChromium().catch((error) => {
+//   console.error('Erro ao baixar o Chromium:', error);
+// });
 
 function delay(time) {
 
@@ -39,11 +79,11 @@ async function getData(time, actualPage){
                     return results
                 }
             })
-            
+
             return results
         })
         )
-        
+
         return scrapObj[0].then(res => {return res})
     })
 
@@ -52,8 +92,15 @@ async function getData(time, actualPage){
 
 async function getParsedBody(url, img){
 
-    const browser = await puppeteer.launch({
-        headless: 'new'
+    const options = {};
+    const stats = await PCR(options);
+
+    const browser = await stats.puppeteer.launch({
+        headless: 'new',
+        args: ["--no-sandbox"],
+        executablePath: stats.executablePath
+    }).catch(function(error) {
+        console.log(error);
     });
     
     const page = await browser.newPage()
@@ -68,7 +115,8 @@ async function getParsedBody(url, img){
     
     return scrapObj
 
-}
+}  
+
 
 module.exports = {
     getParsedBody,
