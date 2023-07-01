@@ -2,6 +2,11 @@ const {getParsedBody} = require('./scrap')
 const file = require('fs')
 
 
+const HTTP_REQUEST = {
+  requisition: '',
+  response: {},
+}
+
 function verifyDirectory(dir){
 
   return new Promise((resolve, reject)=>{
@@ -33,32 +38,47 @@ function verifyDirectory(dir){
 
     resolve('Diretorio : ok')
   })
-
    
 }
 
 function post(req, res){
 
-    let list = []
+  return new Promise((resolve, reject) => {
 
+    let list = []
+    
     getParsedBody('https://brandmark.io/logo-rank/', req.file.filename)
-      .then(result => {
-        list.push(...result)
-        setTimeout(()=>{console.log(list)}, 3000)
+    .then(result => {
+      
+      list.push(...result)
+      
+      setTimeout(()=>{console.log(list)}, 3000)
+      
         file.unlink(`files/${req.file.path.slice(6)}`, (err)=>{
           if(err)
-            console.log(err)
+          console.log(err)
         })
+        
         const obj = {'uniqueness':list[0], 'legibility':list[1], 'color': list[2], 'overall': list[3]}
-        if(list[0] == ''){
-          console.log('empty result: recalling the post function')
-          post(req, res)
-        }
-        res.json(JSON.stringify(obj))
-        return list
-      })
 
+        if(list[0] == '' && list[1] == '' && list[2] == '' && list[3] == ''){
+          console.log('empty result: recalling the post function')
+
+          try{
+            post(req, res)
+          }catch{
+            reject(new Error('ocorreu um erro ao rechamar a função'))
+          }
+          
+        }
+      
+        resolve(JSON.stringify(obj))
+
+      })
+      
       list = []
+
+    })
 }
 
 module.exports = {

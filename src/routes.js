@@ -3,7 +3,6 @@ const multer = require('multer')
 const {post} = require('./handler')
 const {verifyDirectory} = require('./handler')
 
-
 const dir = 'files'
 let storage
 
@@ -21,19 +20,19 @@ verifyDirectory(dir).then(()=>{
 
   const upload = multer({ storage: storage })
 
-  
+route.post('/up', upload.single('file'), (req, res, next) => {
 
-  route.post('/up', upload.single('file'), (req, res, next) => {
-        
-    try{
+  try{
 
-      console.log('arquivo enviado para porta 3001')
-      console.log(req.file)
-      
-      post(req, res)
+    console.log('arquivo enviado para porta 3001')
+    console.log(req.file)
+
+    post(req, res).then( json => {
+      res.json( json )
+    })
 
     }catch(err){
-        console.log(err)
+      console.log(err)
     }
   })
 })

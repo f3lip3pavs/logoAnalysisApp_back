@@ -1,44 +1,5 @@
-const puppeteer = require("puppeteer")
+const { resolve } = require("path");
 const PCR = require("puppeteer-chromium-resolver");
-
-// const puppeteerCore = require('puppeteer-core');
-// const path = require('path');
-// const os = require('os');
-
-// async function downloadChromium() {
-//   const cacheDirectory =
-//     process.env['PUPPETEER_CACHE_DIR'] ||
-//     process.env['npm_config_puppeteer_cache_dir'] ||
-//     process.env['npm_package_config_puppeteer_cache_dir'] ||
-//     path.join(os.homedir(), '.cache', 'puppeteer');
-
-//   const executablePath = path.join(
-//     cacheDirectory,
-//     'chrome',
-//     'win64-114.0.5735.133',
-//     'chrome-win64',
-//     'chrome.exe'
-//   );
-
-//   const browserFetcher = puppeteerCore.createBrowserFetcher({
-//     path: cacheDirectory,
-//   });
-
-//   console.log('Baixando Chromium...');
-//   await browserFetcher.download('114.0.5735.133');
-
-//   console.log('Configurando executável...');
-//   await puppeteerCore.launch({
-//     executablePath,
-//     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-//   });
-
-//   console.log('Chromium e dependências baixados com sucesso!');
-// }
-
-// downloadChromium().catch((error) => {
-//   console.error('Erro ao baixar o Chromium:', error);
-// });
 
 function delay(time) {
 
@@ -60,21 +21,19 @@ async function sendFile(imgFile, actualPage){
 async function getData(time, actualPage){
 
     const scrapObj = delay(time).then(async () => {    
-        
+
         let scrapObj = []
-        
 
         scrapObj.push(actualPage.evaluate(() => {
-        
+
             const containers = document.querySelectorAll('.col-md-12 .progressbar-text')
-            
+
             const results = []
-          
+
             containers.forEach(index => {
 
                 if(index.innerHTML != undefined)
                 {
-                    
                     results.push(index.innerHTML)
                     return results
                 }
@@ -102,23 +61,21 @@ async function getParsedBody(url, img){
     }).catch(function(error) {
         console.log(error);
     });
-    
+
     const page = await browser.newPage()
 
     await page.goto(url)
 
     sendFile(img, page)
 
-    const scrapObj = await getData(5000, page)
+    const scrapObj = await getData(10000, page)
 
     browser.close()
-    
+
     return scrapObj
-
 }  
-
 
 module.exports = {
     getParsedBody,
     delay
-    }
+}
