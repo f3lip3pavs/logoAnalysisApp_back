@@ -68,7 +68,7 @@ async function getParsedBody(url, img){
 
     sendFile(img, page)
 
-    const scrapObj = await getData(10000, page)
+    const scrapObj = await getData(5000, page)
 
     browser.close()
 
