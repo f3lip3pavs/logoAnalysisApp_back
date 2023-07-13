@@ -2,7 +2,6 @@ const route = require('express').Router()
 const multer = require('multer')
 const {post} = require('./handler')
 const {verifyDirectory} = require('./handler')
-const fs = require('fs')
 
 const dir = 'files'
 const cacheDir = '.cache'
@@ -23,15 +22,6 @@ verifyDirectory(dir).then(()=>{
   const upload = multer({ storage: storage })
 
   verifyDirectory(cacheDir).then(()=>{
-
-    fs.chmod(`C:\\workspace\\temp-test\\${cacheDir}`, '777', (err) => {
-      if (err) {
-       console.error('Erro ao modificar as permissões do diretório:', err);
-        return;
-     }
-    
-      console.log('Permissões do diretório modificadas com sucesso.');
-    });
 
     route.post('/up', upload.single('file'), (req, res, next) => {
 
