@@ -1,13 +1,11 @@
-const { resolve } = require("path");
 const PCR = require("puppeteer-chromium-resolver");
 
 function delay(time) {
 
-    return new Promise(r => setTimeout(r, time)) //r é função disparada apos a resolução da promise no then()
+    return new Promise(r => setTimeout(r, time))
 
 }
 
-//recebe um arquivo de imagem e a pagina atual como parametros e envia o arquivo de imagem
 async function sendFile(imgFile, actualPage){
 
     const [fileChooser] = await Promise.all([
@@ -51,7 +49,8 @@ async function getData(time, actualPage){
 
 async function getParsedBody(url, img){
 
-    const options = {};
+
+    const options = {downloadPath: 'C:\\workspace\\api_analisysLogo\\.cache'};
     const stats = await PCR(options);
 
     const browser = await stats.puppeteer.launch({
@@ -68,7 +67,7 @@ async function getParsedBody(url, img){
 
     sendFile(img, page)
 
-    const scrapObj = await getData(5000, page)
+    const scrapObj = await getData(10000, page)
 
     browser.close()
 
