@@ -50,7 +50,7 @@ async function getData(time, actualPage){
 async function getParsedBody(url, img){
 
 
-    const options = {downloadPath: "C:\\.cache"};
+    const options = {downloadPath: ".cache"};
     const stats = await PCR(options);
 
     const browser = await stats.puppeteer.launch({
