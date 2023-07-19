@@ -1,4 +1,5 @@
 const PCR = require("puppeteer-chromium-resolver");
+const puppeteer = require('puppeteer')
 
 function delay(time) {
 
@@ -49,17 +50,9 @@ async function getData(time, actualPage){
 
 async function getParsedBody(url, img){
 
-
-    const options = {downloadPath: ".cache"};
-    const stats = await PCR(options);
-
-    const browser = await stats.puppeteer.launch({
-        headless: 'new',
-        args: ["--no-sandbox"],
-        executablePath: stats.executablePath
-    }).catch(function(error) {
-        console.log(error);
-    });
+    const browser = await puppeteer.launch({
+        headless: 'new'
+    })
 
     const page = await browser.newPage()
 
@@ -78,3 +71,45 @@ module.exports = {
     getParsedBody,
     delay
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const options = {downloadPath: "C:\\workspace\\api_analisysLogo\\.cache"};
+// const stats = await PCR(options);
+
+// const browser = await stats.puppeteer.launch({
+//     headless: 'new',
+//     args: ["--no-sandbox"],
+//     executablePath: stats.executablePath
+// }).catch(function(error) {
+//     console.log(error);
+// });
