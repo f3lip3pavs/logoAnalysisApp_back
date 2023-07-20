@@ -1,16 +1,6 @@
 const express = require("express");
 const route = require('./src/routes.js');
 const cors = require('cors')
-const chromium = require('chromium')
-const config = require('./node_modules/chromium/config');
-const path = require('path');
-
-config.BIN_OUT_PATH = path.join(__dirname, '.cache/puppeteer/chrome/win64-114.0.5735.133/chrome-win64')
-
-chromium.install().then(function() {
-    console.log('chromium instalado')
-    console.log(chromium.path)
-});
 
 const port = process.env.PORT || 3001
 
