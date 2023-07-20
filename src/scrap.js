@@ -1,4 +1,3 @@
-const PCR = require("puppeteer-chromium-resolver");
 const puppeteer = require('puppeteer')
 
 function delay(time) {
